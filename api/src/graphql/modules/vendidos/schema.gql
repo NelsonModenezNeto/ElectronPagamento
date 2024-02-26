@@ -1,0 +1,31 @@
+type Vendidos {
+    idVendido: ID!
+    idPagamento: Int!
+    nomeProduto: String!
+    Quantidade: Int!
+    valorProduto: Float!
+}
+
+type Query {
+    vendido(idVendido: ID!): Vendidos!
+    vendidos: [Vendidos]
+}
+
+input VendidosFilter {
+    idConserto: ID
+    dataHora: String
+    idPatrimonio: Int
+    idFuncionario: Int
+}
+
+input DadosVendidos {
+    idPagamento: Int!
+    nomeProduto: String!
+    Quantidade: Int!
+    valorProduto: Float!
+}
+
+type Mutation {
+    createVendido(data: DadosVendidos!): Vendidos!
+    updateVendido(idVendido: ID!, data: DadosVendidos!): Vendidos!
+}

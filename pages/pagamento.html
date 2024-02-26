@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script type="text/javascript" src="modoEscuro.js"></script>
+    <title>Pagamento</title>
+    <style>
+        body.dark-mode {
+            background-color: #2b2b2b;
+            color: #ffffff;
+        }
+
+        button {
+            padding: 1px 9px;
+            background-color: #bc5bc0;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #9445a0;
+        }
+
+        a {
+            text-decoration: none;
+            color: black;
+            cursor: pointer;
+        }
+
+        a.visited {
+            text-decoration: none;
+            color: white;
+
+        }
+
+        .item {
+            font-family: Arial 'Arial Narrow';
+            font-size: 1.8vh;
+            font-weight: bold;
+            color: rgb(239, 239, 239);
+            background-color: #d689eb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 8vh;
+            user-select: none;
+        }
+
+        .item:hover {
+            background-color: rgb(164, 20, 253);
+            transition: 0.15s ease-in-out;
+
+        }
+
+        .item.dark-mode {
+            background-color: #1b1b1b;
+        }
+
+        .item:hover.dark-mode {
+            background-color: #282828;
+        }
+
+        .ui {
+            background-position: right;
+            background-size: contain;
+            background-repeat: no-repeat;
+            height: 92vh;
+            align-items: center;
+        }
+
+        .nav-item {
+            padding-left: 40.1%;
+            padding-right: 40.1%;
+            padding-top: 3.5vh;
+            padding-bottom: 3.5vh;
+            background-color: aqua;
+        }
+
+        .nav-item:hover {
+            transition: 0.18s ease-in-out;
+            background-color: rgb(162, 0, 255);
+        }
+
+        .btn-rose {
+            font-weight: bold;
+            color: white;
+            width: 100%;
+            background-color: #d689eb;
+
+        }
+
+        .btn-rose:hover {
+            color: white;
+            background-color: #dca8e9;
+
+        }
+
+        .btn-rose:active {
+            color: white !important;
+            background-color: #dca8e9 !important;
+        }
+
+        .btn-rose.dark-mode {
+            color: white;
+            background-color: #1b1b1b;
+        }
+
+        .heade {
+            background-color: #d689eb !important;
+            color: white !important;
+        }
+
+        .heade.dark-mode {
+            background-color: black !important;
+            color: white !important;
+        }
+
+        .input {
+            width: 60%;
+            background-color: #dadada;
+            color: rgb(0, 0, 0);
+            border: none;
+            border: 1px solid white;
+            border-radius: 5px;
+            padding: 8px 8px 8px 8px;
+        }
+
+        #Total {
+            width: 100%;
+            height: 6vh;
+            background-color: #d689eb;
+            color: white;
+            font-size: 2.5vh;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+
+        #Total.dark-mode {
+            background-color: #000000;
+        }
+
+        .table-scrollable {
+            max-height: 30vh;
+            /* Altura máxima de cada linha */
+            overflow-y: auto;
+            /* Adiciona rolagem vertical se necessário */
+            display: block;
+            /* Permite a rolagem vertical */
+            width: 100%;
+            /* Ocupar a largura total */
+            table-layout: fixed;
+            /* Fixa a largura da tabela para ocupar a largura total da coluna */
+        }
+
+        #sumir {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="container-fluid">
+        <div class="row" style="height: 8vh;">
+            <a href="../index.html" class="col-2 item dark-mode-element">
+                <div>MENU</div>
+            </a>
+            <a href="cadastro.html" class="col-2 item dark-mode-element">
+                <div>CADASTRO</div>
+            </a>
+            <a class="col-2 item dark-mode-element" style="box-shadow: inset 0px 5px 0px 0px rgb(106, 106, 106);">
+                <div>PAGAMENTOS</div>
+            </a>
+            <a href="gerenciamento.html" class="col-2 item dark-mode-element">
+                <div>GERENCIAMENTO</div>
+            </a>
+            <a href="configuracoes.html" class="col-2 item dark-mode-element">
+                <div>CONFIGURAÇÕES</div>
+            </a>
+            <a class="col-2 item dark-mode-element" onclick="fecharWindo()">
+                <div>SAIR</div>
+            </a>
+
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div class="container" style="width: 45%;">
+                <div class="row align-items-start justify-content-center" style="height: 92vh;">
+                    <div class="col-12" style="margin-top: 12vh">
+                        <form class="" style="margin-bottom: 10vh;">
+                            <input type="text" class="input text-center mb-3" name="Produto" placeholder="Produto"
+                                id="produto" style="width: 100%;">
+                            <input type="text" class="input text-center mb-3" name="Quantidade" placeholder="Quantidade"
+                                id="quantidade" style="width: 32.6%;">
+                            <input type="text" class="input text-center mb-3" name="valorUni"
+                                placeholder="Valor Unitário" id="valorUni" style="width: 32.6%;">
+                            <input type="text" class="input text-center mb-3" name="valorTotal"
+                                placeholder="Valor Total" id="valorTotal" style="width: 32.6%;" readonly>
+                            <a class="btn btn-rose dark-mode-element" onclick="cadastrarProduto()"
+                                style="width: 100%;">Cadastrar</a>
+                        </form>
+
+                        <input type="text" class="input mb-2" name="Produto" placeholder="Pesquisa Produto: "
+                            id="produtoSearch" style="width: 100%;" oninput="filterProduto()">
+
+                        <table class="table text-center table-scrollable" id="tabelaProdutos">
+                            <thead class="thead">
+                                <tr>
+                                    <th class="heade dark-mode-element" style="width: 10%;">Código</th>
+                                    <th class="heade dark-mode-element" style="width: 10%;">Quantidade</th>
+                                    <th class="heade dark-mode-element" style="width: 40%;">Produto</th>
+                                    <th class="heade dark-mode-element" style="width: 20%;">Preço</th>
+                                    <th class="heade dark-mode-element" style="width: 20%;"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="corpoTabelaProdutos">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="container" style="width: 45%;">
+                <div class="row align-items-start justify-content-center" style="height: 92vh;">
+                    <div class="col-12" style="margin-top: 12vh;">
+                        <table class="table text-center table-scrollable">
+                            <thead class="thead">
+                                <tr>
+                                    <th scope="col" class="heade dark-mode-element" style="width: 10%;">Código</th>
+                                    <th scope="col" class="heade dark-mode-element" style="width: 10%;">Quantidade</th>
+                                    <th scope="col" class="heade dark-mode-element" style="width: 40%;">Produto</th>
+                                    <th scope="col" class="heade dark-mode-element" style="width: 30%;">Preço</th>
+                                    <th scope="col" class="heade dark-mode-element" style="width: 10%;">Ação</th>
+                                </tr>
+                            </thead>
+                            <tbody id="corpoTabelaVenda">
+
+                            </tbody>
+                        </table>
+                        <div id="Total" class="mb-5 dark-mode-element">Valor Total: 0.00</div>
+
+                        <div id="elementoPagamento">
+                            <select class="input text-center mb-2" name="Metodo" id="metodo" style="width: 100%;">
+                                <option disabled selected>Método Pagamento</option>
+                                <option value="pix">PIX</option>
+                                <option value="dinheiro">DINHEIRO</option>
+                                <option value="cartao credito">CARTÃO DE CRÉDITO</option>
+                                <option value="cartao debito">CARTÃO DE DÉBITO</option>
+                            </select>
+                            <div id="sumir">
+                                <label style="width: 50%;">Valor Recebido</label>
+                                <label style="width: 10%;">Troco</label><br>
+                                <input type="number" class="input text-center mb-3" name="Recebido"
+                                    placeholder="Valor Recebido" id="recebido" style="width: 49%;">
+                                <input type="number" class="input text-center mb-3" name="Troco" placeholder="Troco"
+                                    id="troco" style="width: 50%;">
+                            </div>
+                            <div id="desaparecer">
+                                <label style="width: 50%;">Funcionário</label>
+                                <label style="width: 10%;">Comissão</label><br>
+                                <select class="input text-center mb-2" name="Metodo" id="funcionarios"
+                                    style="width: 49%;">
+                                    <option disabled selected value=""></option>
+                                </select>
+
+                                <select class="input text-center mb-2" name="Porcentagem" id="porcentagem"
+                                    style="width: 50%;">
+                                    <option value="0">0%</option>
+                                    <option value="5">5%</option>
+                                    <option value="10">10%</option>
+                                    <option value="15">15%</option>
+                                    <option value="20">20%</option>
+                                    <option value="25">25%</option>
+                                    <option value="30">30%</option>
+                                    <option value="35">35%</option>
+                                    <option value="40">40%</option>
+                                    <option value="45">45%</option>
+                                    <option value="50">50%</option>
+                                    <option value="55">55%</option>
+                                    <option value="60">60%</option>
+                                    <option value="65">65%</option>
+                                    <option value="70">70%</option>
+                                    <option value="75">75%</option>
+                                    <option value="80">80%</option>
+                                    <option value="85">85%</option>
+                                    <option value="90">90%</option>
+                                    <option value="95">95%</option>
+                                    <option value="100">100%</option>
+                                </select>
+
+                            </div>
+                            <a class="btn btn-rose dark-mode-element" id="btnPagamento" style="width: 100%;">Realizar
+                                Pagamento</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function carregaFuncionarios() {
+            const query = `query Query {
+                funcionarios {
+                    idFuncionario
+                    Nome
+                    Status
+                }
+            }`;
+            const variables = {
+
+            };
+            axios.post('http://localhost:4000', { query, variables })
+                .then((response) => {
+                    console.log(response.data.data.funcionarios);
+                    const funcionarios = response.data.data.funcionarios;
+                    const selectFuncionarios = document.getElementById('funcionarios');
+                    selectFuncionarios.innerHTML = '';
+                    funcionarios.forEach((funcionario) => {
+                        if (funcionario.Status === 0) {
+                            return;
+                        } else	if (funcionario.Status === 1) {
+                            const option = document.createElement('option');
+                            option.value = funcionario.Nome;
+                            option.textContent = funcionario.Nome;
+                            console.log(funcionario.Nome)
+                            selectFuncionarios.appendChild(option);
+                        }
+                    });
+                })
+                .catch((error) => {
+                    console.error('Erro ao carregar dados:', error);
+                });
+        }
+        document.addEventListener('DOMContentLoaded', carregaFuncionarios)
+        function calcularTroco() {
+            const valorRecebido = document.getElementById('recebido').value;
+            const valorTotal = document.getElementById('Total').textContent;
+            const tabelaVenda = document.getElementById('corpoTabelaVenda');
+
+            let total = 0;
+
+            for (let i = 0; i < tabelaVenda.rows.length; i++) {
+                const linha = tabelaVenda.rows[i];
+                const precoCell = linha.cells[3];
+
+                total += parseFloat(precoCell.textContent);
+            }
+            const troco = parseFloat(valorRecebido) - total;
+            document.getElementById('troco').value = troco.toFixed(2);
+        }
+
+
+
+        function togglePagamentoDisplay() {
+            const elementoPagamento = document.getElementById('elementoPagamento');
+            const tabelaVenda = document.getElementById('corpoTabelaVenda');
+
+            if (tabelaVenda.rows.length > 0) {
+                elementoPagamento.style.display = 'block';
+            } else {
+                elementoPagamento.style.display = 'none';
+            }
+        }
+
+        document.getElementById('metodo').addEventListener('change', function () {
+            // Verifique o método de pagamento selecionado
+            var metodoPagamento = document.getElementById('metodo').value;
+
+            if (metodoPagamento === 'pix' || metodoPagamento === 'cartao credito' || metodoPagamento === 'cartao debito') {
+                document.getElementById('sumir').style.display = 'none';
+                document.getElementById('desaparecer').style.display = 'block';
+                Swal.fire({
+                    title: 'Atenção!',
+                    text: 'Antes de confirmar o pagamento realize a transação no ' + metodoPagamento + '?',
+                    icon: 'warning',
+                    confirmButtonText: 'Sim',
+                })
+
+            } else if (metodoPagamento === 'dinheiro') {
+                document.getElementById('desaparecer').style.display = 'block';
+                document.getElementById('sumir').style.display = 'block';
+
+            }
+        });
+
+        function exportarParaExcel() {
+            const tabelaVenda = document.getElementById('corpoTabelaVenda');
+            const metodo = document.getElementById('metodo').value;
+            const dados = [];
+
+            // Adicione os cabeçalhos à matriz
+            const cabecalhos = ['Código', 'Quantidade', 'Produto', 'Preço'];
+            dados.push(cabecalhos);
+
+            let total = 0;
+
+            for (let i = 0; i < tabelaVenda.rows.length; i++) {
+                const linha = tabelaVenda.rows[i];
+                const precoCell = linha.cells[3];
+
+                total += parseFloat(precoCell.textContent);
+            }
+
+            // Percorra as linhas da tabela e adicione os dados à matriz
+            for (let i = 0; i < tabelaVenda.rows.length; i++) {
+                const linha = tabelaVenda.rows[i];
+                const codigo = linha.cells[0].textContent;
+                const quantidade = linha.cells[1].textContent;
+                const produto = linha.cells[2].textContent;
+                const preco = linha.cells[3].textContent;
+
+                const dadosLinha = [codigo, quantidade, produto, preco];
+                console.log(dadosLinha);
+                dados.push(dadosLinha);
+            }
+
+            if (metodo == 'Método Pagamento') {
+                Swal.fire({
+                    title: 'Erro!',
+                    text: 'Selecione um método de pagamento!',
+                    icon: 'error',
+                    confirmButtonText: 'OK',
+                });
+                return;
+            } else if (metodo == 'dinheiro' && total > document.getElementById('recebido').value) {
+                Swal.fire({
+                    title: 'Erro!',
+                    text: 'Valor recebido menor que o valor total!',
+                    icon: 'error',
+                    confirmButtonText: 'OK',
+                });
+                return;
+            } else {
+                const query = `
+            mutation ExportarParaExcel($dados: [[String!]]) {
+            exportarParaExcel(dados: $dados)
+            }
+            `;
+
+                const variables = {
+                    dados: dados,
+                };
+                console.log(variables)
+                axios.post('http://localhost:4000', { query, variables })
+                    .then((response) => {
+                        console.log('Dados enviados com sucesso:', response.data);
+                    })
+                    .catch((error) => {
+                        console.error('Erro ao enviar dados para o servidor GraphQL:', error);
+                    });
+                document.getElementById('Total').textContent = 'Valor Total: R$ 0.00';
+            }
+        }
+
+        document.getElementById('btnPagamento').addEventListener('click', exportarParaExcel);
+
+        function realizarPagamento() {
+            // Crie um novo objeto Date
+            var dataAtual = new Date();
+
+            // Obtenha as informações de data
+            var dia = dataAtual.getDate();
+            var mes = dataAtual.getMonth() + 1; // Os meses começam do zero, então adicionamos 1
+            var ano = dataAtual.getFullYear();
+
+            // Formate o dia e o mês para ter dois dígitos
+            dia = dia < 10 ? '0' + dia : dia;
+            mes = mes < 10 ? '0' + mes : mes;
+
+            // Crie a string no formato desejado
+            var dataFormatada = dia + '/' + mes + '/' + ano;
+
+            metodo = document.getElementById('metodo').value;
+            const tabelaVenda = document.getElementById('corpoTabelaVenda');
+
+            let total = 0;
+
+            for (let i = 0; i < tabelaVenda.rows.length; i++) {
+                const linha = tabelaVenda.rows[i];
+                const precoCell = linha.cells[3];
+
+                total += parseFloat(precoCell.textContent);
+            }
+
+            const comissao = document.getElementById('porcentagem').value;
+
+            let comisao = ((parseFloat(comissao) / 100) * total);
+
+            console.log(comisao);
+
+            if (metodo == 'Método Pagamento') {
+                Swal.fire({
+                    title: 'Erro!',
+                    text: 'Selecione um método de pagamento!',
+                    icon: 'error',
+                    confirmButtonText: 'OK',
+                });
+                return;
+            } else if (metodo == 'dinheiro' && total > document.getElementById('recebido').value) {
+                Swal.fire({
+                    title: 'Erro!',
+                    text: 'Valor recebido menor que o valor total!',
+                    icon: 'error',
+                    confirmButtonText: 'OK',
+                });
+                return;
+            } else {
+
+                const funconario = document.getElementById('funcionarios').value;
+                const query = `mutation Mutation($data: DadosPagamento!) {
+                createPagamento(data: $data) {
+                    Comissao
+                    Data
+                    Funcionario
+                    Metodo
+                    idPagamento
+                    valorTotal
+                }
+                }`;
+
+                const variables = {
+                    data: {
+                        Data: dataFormatada,
+                        Metodo: metodo,
+                        valorTotal: total,
+                        Funcionario: funconario,
+                        Comissao: parseFloat(comisao.toFixed(2)),
+                    }
+                };
+                console.log("estou aquii"+variables);
+
+                axios.post('http://localhost:4000', { query, variables })
+                    .then((response) => {
+                        const idPagamento = response.data.data.createPagamento.idPagamento;
+                        adicionarProdutosVendidos(idPagamento);
+
+                    }).catch((error) => {
+                        console.error('Erro ao realizar pagamento:', error);
+                    });
+                document.getElementById('porcentagem').value = '0';
+            }
+
+        }
+
+        function adicionarProdutosVendidos(idPagamento) {
+            const tabelaVenda = document.getElementById('corpoTabelaVenda');
+
+            for (let i = 0; i < tabelaVenda.rows.length; i++) {
+                const linha = tabelaVenda.rows[i];
+                const codigo = linha.cells[0].textContent;
+                const quantidade = linha.cells[1].textContent;
+                const produto = linha.cells[2].textContent;
+                const preco = linha.cells[3].textContent;
+
+                const query = `
+            mutation Mutation($data: DadosVendidos!) {
+                createVendido(data: $data) {
+                    Quantidade
+                    idPagamento
+                    idVendido
+                    nomeProduto
+                    valorProduto
+                }
+            }
+        `;
+
+                const variables = {
+                    data: {
+                        Quantidade: parseInt(quantidade),
+                        idPagamento: parseInt(idPagamento),
+                        nomeProduto: produto,
+                        valorProduto: parseFloat(preco),
+                    },
+                };
+                console.log(variables);
+                axios.post('http://localhost:4000', { query, variables })
+                    .then((response) => {
+                        console.log('Produto vendido adicionado com sucesso:', response.data);
+                    })
+                    .catch((error) => {
+                        console.error('Erro ao adicionar produto vendido:', error);
+                    });
+            }
+            tabelaVenda.innerHTML = '';
+            document.getElementById('elementoPagamento').style.display = 'none';
+            document.getElementById('metodo').value = 'Método Pagamento';
+            document.getElementById('sumir').style.display = 'none';
+            document.getElementById('recebido').value = '';
+            document.getElementById('troco').value = '';
+
+        }
+
+        document.getElementById("btnPagamento").addEventListener('click', realizarPagamento)
+
+        document.addEventListener('DOMContentLoaded', function () {
+            carregaTable();
+            togglePagamentoDisplay();
+            document.getElementById('recebido').addEventListener('input', calcularTroco);
+            document.getElementById('quantidade').addEventListener('input', calcularValorTotal);
+            document.getElementById('valorUni').addEventListener('input', calcularValorTotal);
+        });
+
+        function filterProduto() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("produtoSearch");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("tabelaProdutos");
+            tr = table.getElementsByTagName("tr");
+
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[2]; // Index 2 corresponds to the "Produto" column
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+
+        function excluirProduto(linha) {
+            const tabelaVenda = document.getElementById('corpoTabelaVenda');
+            tabelaVenda.removeChild(linha);
+            calcularTotal();
+            togglePagamentoDisplay();
+        }
+
+        function calcularTotal() {
+            const tabelaVenda = document.getElementById('corpoTabelaVenda');
+            let total = 0;
+
+            for (let i = 0; i < tabelaVenda.rows.length; i++) {
+                const linha = tabelaVenda.rows[i];
+                const precoCell = linha.cells[3];
+
+                total += parseFloat(precoCell.textContent);
+            }
+
+            document.getElementById('Total').textContent = `Valor Total: R$ ${total.toFixed(2)}`;
+        }
+
+        function calcularValorTotal() {
+            const quantidade = document.getElementById('quantidade').value;
+            const valorUni = document.getElementById('valorUni').value;
+
+            const valorTotal = parseInt(quantidade) * parseFloat(valorUni);
+
+            if (isNaN(valorTotal)) {
+                document.getElementById('valorTotal').value = '';
+                return;
+            }
+
+            document.getElementById('valorTotal').value = valorTotal;
+        }
+
+        function carregaTable() {
+            const query = `query Query {
+                produtos {
+                    Preco
+                    Status
+                    nomeProduto
+                    idProduto
+                }
+            }`;
+            const variables = {
+
+            };
+            axios.post('http://localhost:4000', { query, variables })
+                .then((response) => {
+                    const produtos = response.data.data.produtos;
+
+
+                    const produtosFiltrados = produtos.filter(produto => produto.Status === 1);
+
+
+                    const corpoTabela = document.getElementById('corpoTabelaProdutos');
+                    corpoTabela.innerHTML = '';
+
+
+                    produtosFiltrados.forEach((produto) => {
+                        const newRow = corpoTabela.insertRow();
+
+                        const codigoCell = newRow.insertCell(0);
+                        codigoCell.textContent = produto.idProduto;
+
+                        const quantidadeCell = newRow.insertCell(1);
+                        quantidadeCell.textContent = "1";
+
+                        const produtoCell = newRow.insertCell(2);
+                        produtoCell.textContent = produto.nomeProduto;
+
+                        const precoCell = newRow.insertCell(3);
+                        precoCell.textContent = produto.Preco.toFixed(2);
+
+                        const addActionCell = newRow.insertCell(4);
+                        const addButton = document.createElement('button');
+                        addButton.textContent = 'Adicionar';
+                        addButton.addEventListener('click', function () {
+                            adicionarProduto(produto);
+                        });
+                        addActionCell.appendChild(addButton);
+                        alterarTabela()
+
+                    });
+                })
+                .catch((error) => {
+                    console.error('Erro ao carregar dados:', error);
+                });
+        }
+
+        function adicionarProduto(produto) {
+            // Obter a tabela de vendas
+            const tabelaVenda = document.getElementById('corpoTabelaVenda');
+
+            // Verificar se o produto já está na tabela de vendas
+            let produtoExistente = false;
+            let linhaExistente;
+
+            for (let i = 0; i < tabelaVenda.rows.length; i++) {
+                const linha = tabelaVenda.rows[i];
+                const nomeCell = linha.cells[2];
+
+                // Se o produto já estiver na tabela, atualize a linha existente
+                if (nomeCell.textContent === produto.nomeProduto.toString()) {
+                    produtoExistente = true;
+                    linhaExistente = linha;
+                    break;
+                }
+            }
+
+            // Se o produto já existir na tabela de vendas, atualize a quantidade e o preço
+            if (produtoExistente) {
+                const quantidadeCell = linhaExistente.cells[1];
+                const precoCell = linhaExistente.cells[3];
+
+                // Atualizar a quantidade
+                let quantidadeAtual = parseInt(quantidadeCell.textContent);
+                quantidadeAtual += 1;
+                quantidadeCell.textContent = quantidadeAtual;
+
+                // Atualizar o preço total
+                let precoAtual = parseFloat(precoCell.textContent);
+                precoAtual += parseFloat(produto.Preco);
+                precoCell.textContent = precoAtual.toFixed(2); // Arredondar para 2 casas decimais
+            } else {
+                // Se o produto não existir na tabela de vendas, adicione uma nova linha
+                const newRowVenda = tabelaVenda.insertRow();
+
+                // Preencher a nova linha com as informações do produto
+                const codigoCell = newRowVenda.insertCell(0);
+                codigoCell.textContent = produto.idProduto;
+
+                const quantidadeCell = newRowVenda.insertCell(1);
+                quantidadeCell.textContent = "1";
+
+                const firstCell = newRowVenda.insertCell(2);
+                firstCell.textContent = produto.nomeProduto;
+
+                const lastCell = newRowVenda.insertCell(3);
+                lastCell.textContent = produto.Preco;
+
+                const deleteCell = newRowVenda.insertCell(4);
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Excluir';
+                deleteButton.addEventListener('click', function () {
+                    excluirProduto(newRowVenda);
+                });
+                deleteCell.appendChild(deleteButton);
+                document.getElementById('desaparecer').style.display = 'none';
+            }
+            alterarTabela()
+            calcularTotal();
+            togglePagamentoDisplay();
+            calcularTroco()
+        }
+
+        function cadastrarProduto() {
+            const produto = document.getElementById('produto').value;
+            const quantidade = document.getElementById('quantidade').value;
+            const valorUni = document.getElementById('valorUni').value;
+            const valorTotal = document.getElementById('valorTotal').value;
+            const tabelaVenda = document.getElementById('corpoTabelaVenda');
+
+            let produtoExistente = false;
+            let linhaExistente;
+
+            if (produto === '' || quantidade === '' || valorUni === '') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erro',
+                    text: 'Preencha todos os campos!',
+                });
+                return;
+            } else if (isNaN(quantidade) || isNaN(valorUni)) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erro',
+                    text: 'Preencha os campos de quantidade e valor unitário com números!',
+                });
+                return;
+            } else {
+                for (let i = 0; i < tabelaVenda.rows.length; i++) {
+                    const linha = tabelaVenda.rows[i];
+                    const nomeCell = linha.cells[2];
+
+                    // Se o produto já estiver na tabela, atualize a linha existente
+                    if (nomeCell.textContent === produto) {
+                        produtoExistente = true;
+                        linhaExistente = linha;
+                        break;
+                    }
+                }
+                if (produtoExistente) {
+                    const quantidadeCell = linhaExistente.cells[1];
+                    const precoCell = linhaExistente.cells[3];
+
+                    // Atualizar a quantidade
+                    let quantidadeAtual = parseInt(quantidadeCell.textContent);
+                    quantidadeAtual += parseInt(quantidade);
+                    quantidadeCell.textContent = quantidadeAtual;
+
+                    // Atualizar o preço total
+                    let precoAtual = parseFloat(precoCell.textContent);
+                    precoAtual += parseFloat(valorTotal);
+                    precoCell.textContent = precoAtual.toFixed(2);
+
+                    document.getElementById('produto').value = '';
+                    document.getElementById('quantidade').value = '';
+                    document.getElementById('valorUni').value = '';
+                    document.getElementById('valorTotal').value = '';
+
+                } else {
+                    const newRowVenda = tabelaVenda.insertRow();
+
+                    // Preencher a nova linha com as informações do produto
+                    const codigoCell = newRowVenda.insertCell(0);
+                    codigoCell.textContent = "0";
+
+                    const quantidadeCell = newRowVenda.insertCell(1);
+                    quantidadeCell.textContent = parseInt(quantidade);
+
+                    const firstCell = newRowVenda.insertCell(2);
+                    firstCell.textContent = produto;
+
+                    const lastCell = newRowVenda.insertCell(3);
+                    lastCell.textContent = valorTotal;
+
+                    const deleteCell = newRowVenda.insertCell(4);
+                    const deleteButton = document.createElement('button');
+                    deleteButton.textContent = 'Excluir';
+                    deleteButton.addEventListener('click', function () {
+                        excluirProduto(newRowVenda);
+                    });
+                    deleteCell.appendChild(deleteButton);
+
+                    document.getElementById('produto').value = '';
+                    document.getElementById('quantidade').value = '';
+                    document.getElementById('valorUni').value = '';
+                    document.getElementById('valorTotal').value = '';
+
+                    document.getElementById('elementoPagamento').style.display = 'block';
+
+
+                }
+            }
+            alterarTabela()
+            calcularTotal();
+        }
+
+        function alterarTabela() {
+            if (darkModeEnabled) {
+                const tdElements = document.querySelectorAll('td');
+                tdElements.forEach(td => {
+                    td.style.backgroundColor = '#1f1f1f';
+                    td.style.color = 'white'; // Altere para a cor desejada para o texto dentro do td
+                });
+                // Se o modo escuro estiver ativado, adicione a classe 'dark-mode' ao corpo do documento HTML
+                document.body.classList.add('dark-mode');
+
+                // Adiciona a classe 'dark-mode' nos elementos específicos
+                const elementosComDarkMode = document.querySelectorAll('.dark-mode-element');
+                elementosComDarkMode.forEach(elemento => {
+                    elemento.classList.add('dark-mode');
+                });
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>

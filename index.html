@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script type="text/javascript" src="pages/modoEscuro.js"></script>
+    <title>Sistema de Pagamentos</title>
+    <style>
+        body.dark-mode {
+            background-color: #2b2b2b;
+            color: #ffffff;
+        }
+
+        a {
+            text-decoration: none;
+            color: black;
+            cursor: pointer;
+        }
+
+        a.visited {
+            text-decoration: none;
+            color: white;
+
+        }
+
+        .item {
+            font-family: Arial 'Arial Narrow';
+            font-size: 1.8vh;
+            font-weight: bold;
+            color: rgb(239, 239, 239);
+            background-color: #d689eb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 8vh;
+            user-select: none;
+        }
+
+        .item:hover {
+            background-color: rgb(164, 20, 253);
+            transition: 0.15s ease-in-out;
+
+        }
+
+
+        .item.dark-mode {
+            background-color: #1b1b1b;
+        }
+
+        .item:hover.dark-mode {
+            background-color: #282828;
+        }
+
+        .ui {
+            background-image: url('Login.png');
+            background-position: right;
+            background-size: contain;
+            background-repeat: no-repeat;
+            height: 92vh;
+            align-items: center;
+        }
+
+        .nav-item {
+            padding-left: 40.1%;
+            padding-right: 40.1%;
+            padding-top: 3.5vh;
+            padding-bottom: 3.5vh;
+            background-color: aqua;
+        }
+
+        .nav-item:hover {
+            transition: 0.18s ease-in-out;
+            background-color: rgb(162, 0, 255);
+        }
+
+        .btn-rose {
+            font-weight: bold;
+            color: white;
+            width: 100%;
+            background-color: #d689eb;
+
+        }
+
+        .btn-rose:hover {
+            color: white;
+            background-color: #dca8e9;
+
+        }
+
+        .btn-rose:active {
+            color: white !important;
+            background-color: #dca8e9 !important;
+        }
+
+        .btn-rose.dark-mode {
+            color: white;
+            background-color: #1b1b1b;
+        }
+
+        .texto {
+            color: #d689eb;
+            font-weight: bold;
+        }
+
+        .texto.dark-mode {
+            color: #ffffff;
+        }
+
+        .linha {
+            background-color: #d689eb;
+            width: 100%;
+            height: 0.2vh;
+            margin-bottom: 5vh;
+        }
+
+        .linha.dark-mode {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="container-fluid">
+        <div class="row" style="height: 8vh;">
+            <a class="col-2 item dark-mode-element" style="box-shadow: inset 0px 5px 0px 0px rgb(106, 106, 106);">
+                <div>MENU</div>
+            </a>
+            <a href="pages/cadastro.html" class="col-2 item dark-mode-element">
+                <div>CADASTRO</div>
+            </a>
+            <a href="pages/pagamento.html" class="col-2 item dark-mode-element">
+                <div>PAGAMENTOS</div>
+            </a>
+            <a href="pages/gerenciamento.html" class="col-2 item dark-mode-element">
+                <div>GERENCIAMENTO</div>
+            </a>
+            <a href="pages/configuracoes.html" class="col-2 item dark-mode-element">
+                <div>CONFIGURAÇÕES</div>
+            </a>
+            <a class="col-2 item dark-mode-element" onclick="fecharWindo()">
+                <div>SAIR</div>
+            </a>
+
+        </div>
+    </nav>
+
+
+    <!--<nav class="navbar navbar-expand-lg bg-body-tertiary" style="height: 8vh;">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#" style="width: 6%;"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse " id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Pricing</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Dropdown link
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>-->
+
+    <div class="ui">
+        <div class="container">
+            <div class="row" style="height: 92vh;">
+                <div class="col-6">
+                    <div class="display-6 texto dark-mode-element" style="margin-top: 20vh;">FAÇA UM
+                        PAGAMENTO
+                    </div>
+                    <div class="display-8 texto dark-mode-element" style="margin-top: 3vh; margin-bottom: 1vh;">Esse
+                        sistema foi
+                        desenvolvido para realizar os pagamentos da sua empresa, comece agora a realizar pagamentos e
+                        gerencie suas informações. Qualquer dúvida contate a equipe de suporte por meio de
+                        configuracões/ajuda.
+                    </div>
+                    <div class="linha dark-mode-element"></div>
+                    <a href="pages/pagamento.html" class="btn btn-rose dark-mode-element">Realize um
+                        Pagamento</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="">
+
+
+    </script>
+
+</body>
+
+</html>

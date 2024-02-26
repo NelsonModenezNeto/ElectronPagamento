@@ -1,0 +1,12 @@
+
+type Mutation{
+    exportarParaExcel(dados: [[String!]]): String
+
+    enviarEmail(empresa: String!, mensagem: String!): EmailResponse
+}
+
+type EmailResponse {
+        success: Boolean
+        message: String
+    }
+

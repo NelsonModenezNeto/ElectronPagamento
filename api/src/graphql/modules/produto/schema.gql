@@ -1,0 +1,38 @@
+type Produto{
+    idProduto: ID!
+    nomeProduto: String!
+    Preco: Float!
+    Descricao: String!
+    Status: Int!
+}
+
+type Query{
+    produtos: [Produto]!
+    produto(idProduto: ID!): Produto!
+    produtosByPreco(Preco: Float!): [Produto]!
+    produtosByNome(nomeProduto: String!): [Produto]!
+    searchProdutos(filter: PatrimonioFilter): [Produto]
+    totalProdutos: Int!
+}
+
+input PatrimonioFilter {
+    idProduto: ID
+    nomeProduto: String!
+    Preco: Float!
+    Descricao: String!
+    Status: Int!
+}
+
+input dadosProduto{
+    nomeProduto: String!
+    Preco: Float!
+    Descricao: String!
+    Status: Int!
+}
+
+type Mutation{
+    createProduto(data: dadosProduto): Produto!
+    updateProduto(idProduto: ID!, nomeProduto: String!, Preco: Float!, Status: Int!): Produto!
+    deleteProduto(idProduto: ID!): Boolean!
+    ativarProduto(idProduto: ID!, status: Int!): Produto!
+}

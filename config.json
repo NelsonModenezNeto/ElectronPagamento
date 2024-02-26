@@ -1,0 +1,9 @@
+{
+    "database": {
+      "host": "aws.connect.psdb.cloud",
+      "user": "m8vd63ge1ca7iernbqkg",
+      "password": "pscale_pw_QgvGkw0mnp6XCYofQ10qDkbNtXdXZ9gaD6cLAwcIHAh",
+      "database": "teste"
+    }
+  }
+  

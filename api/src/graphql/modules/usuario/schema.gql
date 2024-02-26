@@ -1,0 +1,33 @@
+type Usuario {
+    idUsuario: ID!
+    Nome: String!
+    Email: String!
+    Senha: String!
+}
+
+type Query {
+    usuarios: [Usuario]
+    usuario(idUsuario: ID!): Usuario!
+    confereLogin(Nome: String!, Senha: String!): Usuario!
+    usuarioByNome(Nome: String!): [Usuario]
+}
+
+input UsuarioFilter {
+    idUsuario: ID
+    Nome: String!
+    Email: String!
+    Senha: String!
+}
+
+input DadosUsuario{
+    Nome: String!
+    Email: String!
+    Senha: String!
+}
+
+type Mutation {
+    createUsuario(data: DadosUsuario!): Usuario!
+    updateUsuario(idUsuario: ID!, data: DadosUsuario!): Usuario!
+    deleteUsuario(idUsuario: ID!): Boolean!
+    ativarUsuario(idUsuario: ID!): Usuario!
+}

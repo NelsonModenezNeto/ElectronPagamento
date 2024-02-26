@@ -1,0 +1,36 @@
+type Pagamento {
+  idPagamento: ID!
+  valorTotal: Float!
+  Metodo: String!
+  Data: String!
+  Funcionario: String!
+  Comissao: Float!
+}
+
+type Query {
+  pagamentos: [Pagamento]!
+  pagamento(idPagamento: ID!): Pagamento!
+  pagamentosData(Data: String!): [Pagamento]!
+}
+
+input DadosPagamento {
+  valorTotal: Float!
+  Metodo: String!
+  Data: String!
+  Funcionario: String!
+  Comissao: Float!
+}
+
+input BancadaFilter {
+  idPagamento: ID
+  local: String
+  status: Int
+  apelido: String
+}
+
+type Mutation {
+  createPagamento(data: DadosPagamento!): Pagamento!
+  updatePagamento(idPagamento: ID!, data: DadosPagamento!): Pagamento!
+  deleteBancada(idPagamento: ID!): Boolean!
+  ativarBancada(idPagamento: ID, status: String): Pagamento!
+}

@@ -1,0 +1,41 @@
+type Funcionario {
+    idFuncionario: ID!
+    Salario: Float!
+    Nome: String!
+    Cargo: String!
+    Status: Int!
+    Email: String!
+}
+
+type Query {
+    funcionarios: [Funcionario]
+    funcionario(idFuncionario: ID!): Funcionario
+    funcionariosByNome(nome: String!): [Funcionario]
+    funcionariosByEmail(email: String!): [Funcionario]
+    funcionariosByStatus(status: String!): [Funcionario]
+    searchFuncionarios(filter: FuncionarioFilter): [Funcionario]
+    totalFuncionarios: Int!
+}
+
+input FuncionarioFilter {
+    idFuncionario: ID
+    status: Int
+    nome: String
+    tipo: Int
+    email: String
+}
+
+input DadosFuncionario{
+    Salario: Float!
+    Nome: String!
+    Cargo: String!
+    Status: Int!
+    Email: String!
+}
+
+type Mutation {
+    createFuncionario(data: DadosFuncionario!): Funcionario!
+    updateFuncionario(idFuncionario: ID!, Nome: String!, Cargo: String!, Status: Int!): Funcionario!
+    deleteFuncionario(idFuncionario: ID!): Boolean!
+    ativarFuncionario(idFuncionario: ID!, status: String!): Funcionario!
+}
