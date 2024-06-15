@@ -3,7 +3,7 @@ Para começar a desenvolver e executar o Sistema de Pagamento em Electron, siga 
 
 ## Clone o Repositório:
 Certifique-se de que você tenha o Git instalado e execute o comando:
-#### --git clone https://github.com/seu-usuario/seu-repositorio.git
+#### --git clone [https://github.com/seu-usuario/seu-repositorio.git](https://github.com/NelsonModenezNeto/ElectronPagamento.git)
 
 ## Navegue até o diretório do projeto:
 #### --cd seu-repositorio
