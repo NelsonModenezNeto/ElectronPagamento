@@ -1,6 +1,9 @@
-# Clone o Repositório:
-# Certifique-se de que você tenha o Git instalado e execute o comando:
-git clone https://github.com/seu-usuario/seu-repositorio.git
+### Instruções para Iniciar o Projeto
+
+Para começar a desenvolver e executar o Sistema de Pagamento em Electron, siga as etapas abaixo:
+
+**Clone o Repositório:**
+Certifique-se de que você tenha o Git instalado e execute o comando:
 
 # Navegue até o diretório do projeto:
 cd seu-repositorio
