@@ -14,7 +14,7 @@ Certifique-se de que você tenha o Node.js e o npm (Node Package Manager) instal
 npm install
 
 ## Inicie o Projeto:
-Para iniciar o projeto em modo de desenvolvimento, utilize o comando:
+**Para iniciar o projeto em modo de desenvolvimento, utilize o comando:** 
 npm run dev
 
 
