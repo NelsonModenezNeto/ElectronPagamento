@@ -6,7 +6,7 @@ Certifique-se de que você tenha o Git instalado e execute o comando:
 #### --git clone https://github.com/NelsonModenezNeto/ElectronPagamento.git
 
 ## Navegue até o diretório do projeto:
-#### --cd seu-repositorio
+#### --cd ElectronPagamento
 
 ## Instale as Dependências:
 Certifique-se de que você tenha o Node.js e o npm (Node Package Manager) instalados. Então, instale as dependências necessárias:
