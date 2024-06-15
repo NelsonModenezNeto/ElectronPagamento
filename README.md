@@ -3,18 +3,18 @@ Para começar a desenvolver e executar o Sistema de Pagamento em Electron, siga 
 
 ## Clone o Repositório:
 Certifique-se de que você tenha o Git instalado e execute o comando:
-#### git clone https://github.com/seu-usuario/seu-repositorio.git
+#### --git clone https://github.com/seu-usuario/seu-repositorio.git
 
 ## Navegue até o diretório do projeto:
-#### cd seu-repositorio
+#### --cd seu-repositorio
 
 ## Instale as Dependências:
 Certifique-se de que você tenha o Node.js e o npm (Node Package Manager) instalados. Então, instale as dependências necessárias:
-#### npm install
+#### --npm install
 
 ## Inicie o Projeto:
 Para iniciar o projeto em modo de desenvolvimento, utilize o comando:
-#### npm run dev
+#### --npm run dev
 
 
 ![image](https://github.com/NelsonModenezNeto/ElectronPagamento/assets/99834482/528ca945-e5e6-4700-bb6e-63dc798ba907)
