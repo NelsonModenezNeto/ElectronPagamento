@@ -1,18 +1,18 @@
-### Instruções para Iniciar o Projeto
+# Instruções para Iniciar o Projeto
 Para começar a desenvolver e executar o Sistema de Pagamento em Electron, siga as etapas abaixo:
 
-# Clone o Repositório:
+### Clone o Repositório:
 Certifique-se de que você tenha o Git instalado e execute o comando:
 git clone https://github.com/seu-usuario/seu-repositorio.git
 
-# Navegue até o diretório do projeto:
+### Navegue até o diretório do projeto:
 cd seu-repositorio
 
-# Instale as Dependências:
+### Instale as Dependências:
 Certifique-se de que você tenha o Node.js e o npm (Node Package Manager) instalados. Então, instale as dependências necessárias:
 npm install
 
-# Inicie o Projeto:
+### Inicie o Projeto:
 Para iniciar o projeto em modo de desenvolvimento, utilize o comando:
 npm run dev
 
